@@ -58,21 +58,21 @@ jobs:
 
 # UPdate the K8s Manifest Files
 
-        # View the old k8s manifest before update(optional)
-      - name: Show Original Kubernetes Manifest
-        run:  |
-          cat manifests/deploy.yml
+#########################################################################
+      #   # View the old k8s manifest before update(optional)
+      # - name: Show Original Kubernetes Manifest
+      #   run:  |
+      #     cat manifests/deploy.yml
 
-      # Update the image tag in the Kubernetes manifest file (Required)
-      - name:  Update image tag in manifests
-        run: |
-          find ./manifests -type f -name "deploy.yml" -exec sed -i "s|${{ secrets.DOCKERHUB_USERNAME }}/wisdomtech:.*|${{ secrets.DOCKERHUB_USERNAME }}/wisdomtech:${{ steps.date_time.outputs.timestamp }}|g" {} +
+      # # Update the image tag in the Kubernetes manifest file (Required)
+      # - name:  Update image tag in manifests
+      #   run: |
+      #     find ./manifests -type f -name "deploy.yml" -exec sed -i "s|${{ secrets.DOCKERHUB_USERNAME }}/wisdomtech:.*|${{ secrets.DOCKERHUB_USERNAME }}/wisdomtech:${{ steps.date_time.outputs.timestamp }}|g" {} +
 
-      # View the new k8s manifest after update (optional)
-      - name: Show Updated Kubernetes Manifest
-        run: cat manifests/deploy.yml
-
-
+      # # View the new k8s manifest after update (optional)
+      # - name: Show Updated Kubernetes Manifest
+      #   run: cat manifests/deploy.yml
+#####################################################################################################
 
 
 # Now that the image tag in the Kubernetes manifest file has been updated, we need to ....
