@@ -132,7 +132,7 @@ jobs:
 
       - name: Clone Manifest Repository (K8s manifests)
         run: |
-          git clone https://x-access-token:${{ secrets.TARGET_REPO_TOKEN }}@github.com/${{ env.TARGET_REPO }} manifests
+          git clone https://x-access-token:${{ secrets.TARGET_REPO_TOKEN }}@github.com/${{ env.TARGET_REPO }}
         
       - name: Update image tag in manifest
         run: |
@@ -150,5 +150,5 @@ jobs:
 
           git add .
           git commit -m "Update image tag to ${{ steps.date_time.outputs.timestamp }}" || echo "No changes to commit"
-          git push
+          git push main
 # OKAY, THE WORKFLOW IS COMPLETE.
