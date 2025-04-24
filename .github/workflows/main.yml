@@ -9,6 +9,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    env:
+      TARGET_REPO: wisdom2608/k8s_manifest
+      TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -35,8 +40,11 @@ jobs:
           docker push wisdom2608/wisdomtech:${{ steps.date_time.outputs.timestamp }}
 
 # There  two ways to update the image tag in the Kubernetes manifests file:
+
+# ***********************************************************************************************
 # a) Using sed command to find and replace the image tag in the Kubernetes manifest file direclty.
-     
+# ***********************************************************************************************    
+
 # # UPdate the K8s Manifest Files
 
 #         # View the old k8s manifest (optional)
@@ -53,12 +61,13 @@ jobs:
 #       - name: Show Updated Kubernetes Manifest
 #         run: cat manifests/deploy.yml
 
-
+# ***********************************************************************************************
 # b) Using find command to find and replace the image tag in the Kubernetes manifests file.
+# ***********************************************************************************************
 
 # UPdate the K8s Manifest Files
 
-#########################################################################
+
       #   # View the old k8s manifest before update(optional)
       # - name: Show Original Kubernetes Manifest
       #   run:  |
@@ -72,16 +81,19 @@ jobs:
       # # View the new k8s manifest after update (optional)
       # - name: Show Updated Kubernetes Manifest
       #   run: cat manifests/deploy.yml
-#####################################################################################################
+
 
 
 # Now that the image tag in the Kubernetes manifest file has been updated, we need to ....
 # ..... update the repository or commit the changes to the repository.
 
-
+#-----------------------------------------------
 # THERE ARE TWO WAYS TO UPDATE THE REPOSITORY:
+#------------------------------------------------
 
+# ********************
 # a) First Possibility.
+# ********************
       
     # # Update Github Repository.
     #   - name: Commit and push updated manifests
@@ -93,8 +105,9 @@ jobs:
     #       git remote set-url origin https://github-actions:${{ secrets.GITHUB_TOKEN }}@github.com/wisdom2608/application.git
     #       git push origin main
 
-
-    # # a) Second Possibility.
+      # ******************** 
+      # a) Second Possibility.
+      # *********************
 
     #   - name: Commit and push updated manifests
     #     env:
@@ -111,3 +124,30 @@ jobs:
     #       git push
 
 # Please Check The README.md File For More Detail
+
+#----------------------------------------------------
+# UPDATE THE K8S MANIFEST FILES IN ANOTHER REPOSITORY
+#-----------------------------------------------------
+
+
+      - name: Clone Manifest Repository (K8s manifests)
+        run: |
+          git clone https://x-access-token:${{ secrets.TARGET_REPO_TOKEN }}@github.com/${{ env.TARGET_REPO }} manifests
+        
+      - name: Update image tag in manifest
+        run: |
+          find ./manifests -type f -name "deploy.yml" -exec sed -i "s|${{ secrets.DOCKERHUB_USERNAME }}/wisdomtech:.*|${{ secrets.DOCKERHUB_USERNAME }}/wisdomtech:${{ steps.date_time.outputs.timestamp }}|g" {} +
+
+      - name: Commit and push updated manifest
+        run: |
+          cd manifests
+
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          # Set remote URL using the GitHub token
+          git remote set-url origin https://x-access-token:${TARGET_REPO_TOKEN}@github.com/${{ github.repository }}
+
+          git add .
+          git commit -m "Update image tag to ${{ steps.date_time.outputs.timestamp }}" || echo "No changes to commit"
+          git push
