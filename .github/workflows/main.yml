@@ -13,6 +13,7 @@ jobs:
     env:
       TARGET_REPO: wisdom2608/k8s_manifest
       TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
+      MANIFEST_PATH: manifests/deploy.yml
 
     steps:
       - name: Checkout code
@@ -146,11 +147,7 @@ jobs:
 
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-
-          # Set remote URL using the GitHub token
-          git remote set-url origin https://x-access-token:${TARGET_REPO_TOKEN}@github.com/${{ github.repository }}
-
-          git add .
+          git add ${{ env.MANIFEST_PATH }}
           git commit -m "Update image tag to ${{ steps.date_time.outputs.timestamp }}" || echo "No changes to commit"
           git push
 # OKAY, THE WORKFLOW IS COMPLETE.
