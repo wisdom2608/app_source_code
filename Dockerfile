@@ -6,7 +6,7 @@ RUN apt-get update \
 # Ping utils allow containers to test communication between containers in default and custom networks.
 
 #copy files into html directory 
-COPY lawfirm/* /var/www/html
+COPY my-app/* /var/www/html
 ARG PORT=80
 EXPOSE $PORT
 
