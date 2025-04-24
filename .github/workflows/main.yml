@@ -135,7 +135,9 @@ jobs:
           git clone https://x-access-token:${{ secrets.TARGET_REPO_TOKEN }}@github.com/${{ env.TARGET_REPO }}
         
       - name: Update image tag in manifest
+        
         run: |
+          cd k8s_manifest
           find ./manifests -type f -name "deploy.yml" -exec sed -i "s|${{ secrets.DOCKERHUB_USERNAME }}/wisdomtech:.*|${{ secrets.DOCKERHUB_USERNAME }}/wisdomtech:${{ steps.date_time.outputs.timestamp }}|g" {} +
 
       - name: Commit and push updated manifest
