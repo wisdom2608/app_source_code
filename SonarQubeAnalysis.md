@@ -61,7 +61,7 @@ Access SonarQube on Port 9000
 4. Jenkins Pipeline Job for SonarQube Analysis
 
 a). On the Jenkins Dashboard, Go to
-  - `Manage Jenkins` -> `Plugins` -> `Available Plugins`
+  - `Manage Jenkins` →  `Plugins` →  `Available Plugins`
       Search the follwing:
       - `SonarQube Scanner`,: 
       - `Blue Ocean`, : To monitor each step of your pipeline
@@ -71,7 +71,7 @@ a). On the Jenkins Dashboard, Go to
 
 b). On the Jenkins Dashboard, Go to
   - `Tools` 
-     - `Add JDK` -> Name: `jdk17`, 'Check' install automatically, Select `'Install from adoptium.net'` from dropdown, Version: `select jdk-17.0.11+9`
-     - `Add SonarQube Scanner`, Name: `sonar-scanner`, 'Check' install automatically, - Select `Install from Maven Central`, Version: `SonarQube Scanner 5.0.1.3006` ---> Click on 
-     - `Add Maven` ---> Name:  `maven3`,  'Check' install automatically, Select 'Install from Apache' from dropdown, Version: 3.9.7 ---> Apply ---> Save
+     - `Add JDK` →  Name: `jdk17`, 'Check' install automatically, Select `'Install from adoptium.net'` from dropdown, Version: `select jdk-17.0.11+9`
+     - `Add SonarQube Scanner`, Name: `sonar-scanner`, 'Check' install automatically, - Select `Install from Maven Central`, Version: `SonarQube Scanner 5.0.1.3006`
+     - `Add Maven` →  Name:  `maven3`,  'Check' install automatically, Select 'Install from Apache' from dropdown, Version: 3.9.7 →  Apply →  Save
 
